@@ -45,13 +45,15 @@ class CPU:
             if self.reg[reg_a] == self.reg[reg_b]:
                 self.fl = 0b00000001
                 print('equal')
+                return self.fl
             if self.reg[reg_a] > self.reg[reg_b]:
                 self.fl = 0b00000010
                 print('greater than')
+                return self.fl
             if self.reg[reg_a] < self.reg[reg_b]:
                 self.fl = 0b00000100
+                return self.fl
                 print('less than')
-            return self.fl
         if op is "ADD":
             self.reg[reg_a] += self.reg[reg_b]
             return self.reg[reg_a]
@@ -160,7 +162,20 @@ class CPU:
                       self.ram[self.pc+1], self.ram[self.pc+2])
                 if self.fl == 1:
                     print('equal')
-                break
+                else:
+                    self.pc += 2
+                # break
+            if ir == 0b01010110:    # JNE -86- if E is false, jump to the given address
+                # print(self.ram[self.pc])
+                # print(self.fl)
+                if self.fl != 1:
+                    self.pc = self.reg[self.ram[self.pc+1]]
+                    # self.pc = self.ram[self.pc+1]
+                else:
+                    self.pc += 2
+                # break
+            if ir == 10:
+                print('err')
 
     def ram_read(self, address):
         return self.ram[address]
