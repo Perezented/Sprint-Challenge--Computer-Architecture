@@ -161,7 +161,7 @@ class CPU:
                 print(self.ram[self.pc],
                       self.ram[self.pc+1], self.ram[self.pc+2])
                 if self.fl == 1:
-                    print('equal')
+                    self.pc = self.reg[self.ram[self.pc + 1]]
                 else:
                     self.pc += 2
                 # break
@@ -174,8 +174,8 @@ class CPU:
                 else:
                     self.pc += 2
                 # break
-            if ir == 10:
-                print('err')
+            if ir == 0b01010100:  # JMP -84-
+                self.pc = self.reg[self.ram[self.pc+1]]
 
     def ram_read(self, address):
         return self.ram[address]
